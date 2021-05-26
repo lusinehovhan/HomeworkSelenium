@@ -24,7 +24,6 @@ public class SearchJobs {
 
     public int findActualJobsCount() {
         List<WebElement> jobsElement = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(product));
-        int r = jobsElement.size();
         return jobsElement.size();
     }
 
