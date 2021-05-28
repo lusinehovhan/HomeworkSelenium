@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class HomePage {
     private WebDriver driver;
     private WebDriverWait wait;
-    public static int jobCategoryOption = 17;
+    public static int jobCategoryOption = 16;
     private By jobCategoryInput = By.xpath("//select[@id='jobsfilter-category']");
     private By jobCategory = By.xpath("//select[@id='jobsfilter-category']//option[@value='" + jobCategoryOption + "']");
     private By search = By.xpath("//button[@data-url='/en/site/search']");

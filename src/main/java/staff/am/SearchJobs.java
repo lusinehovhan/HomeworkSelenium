@@ -1,6 +1,7 @@
 package staff.am;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -24,7 +25,11 @@ public class SearchJobs {
 
     public String checkedBox() {
         WebElement checkedBox = driver.findElement(checkBox);
-        return checkedBox.getAttribute("checked");
+        try {
+            return checkedBox.getAttribute("checked");
+        } catch (NoSuchElementException e) {
+            return null;
+        }
     }
 
     public int findCheckBox() {
@@ -40,7 +45,6 @@ public class SearchJobs {
     public int findExpectedJobsCount() {
         WebElement jobsExpectedElement = driver.findElement(prod);
         String jobsExpectedNum = jobsExpectedElement.getText().replace("(", "").replace(")", "");
-        System.out.println(jobsExpectedNum);
         return Integer.parseInt(jobsExpectedNum);
     }
 
