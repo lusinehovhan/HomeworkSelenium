@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class SearchJobs {
     private WebDriver driver;
     private WebDriverWait wait;
-    private int currentPageNum = 100;
+    public static int currentPageNum = 100;
     private By product = By.cssSelector("[data-key]");
     private By prod = By.xpath("//div[@class='categories-sidebar']//label[" + HomePage.getJobCategoryOption() + "]//span");
     private By checkBox = By.xpath("//div[@class='categories-sidebar']//label[" + HomePage.getJobCategoryOption() + "]//input");
@@ -46,11 +46,6 @@ public class SearchJobs {
         WebElement jobsExpectedElement = driver.findElement(prod);
         String jobsExpectedNum = jobsExpectedElement.getText().replace("(", "").replace(")", "");
         return Integer.parseInt(jobsExpectedNum);
-    }
-
-    public int getCurrentPageNumber() {
-
-        return currentPageNum;
     }
 
     public void waitForPageLoad() {
