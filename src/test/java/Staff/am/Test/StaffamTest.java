@@ -2,19 +2,18 @@ package Staff.am.Test;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 import staff.am.HomePage;
-import staff.am.SearchJobs;
-
-import static staff.am.HomePage.getJobCategoryOption;
+import staff.am.SearchJobsPage;
 
 
 public class StaffamTest {
     private WebDriver driver;
     private HomePage homePage;
-    private SearchJobs searchJobs;
+    private SearchJobsPage searchJobsPage;
+    private String jobCategoryOption = "Sales/service management";
+    private int currentPageNum = 100;
 
     @BeforeSuite
     public void chromeSetup() throws InterruptedException {
@@ -22,39 +21,37 @@ public class StaffamTest {
                 "src\\main\\resources\\chromedriver.exe");
     }
 
-    @BeforeClass
+    @Test
     public void setup() throws InterruptedException {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get("https://www.staff.am");
+
         homePage = new HomePage(driver);
-        homePage.waitForPageLoad();
-        homePage.searchJobCategory();
+        homePage.waitClickable();
+        homePage.searchJobCategory(jobCategoryOption);
     }
 
     @Test
     public void testStaffAM() throws InterruptedException {
         SoftAssert softAssert = new SoftAssert();
-        searchJobs = new SearchJobs(driver);
-        searchJobs.waitForPageLoad();
-        searchJobs.waitForCheckBox();
-        softAssert.assertNotNull(searchJobs.checkedBox(), "This selected job catigory does not have checked box");
+        searchJobsPage = new SearchJobsPage(driver);
 
-        homePage = new HomePage(driver);
-        homePage.waitForPageLoad();
-        softAssert.assertEquals(getJobCategoryOption(), searchJobs.findCheckBox(), "The checked checkbox with attribute value: " + getJobCategoryOption() + " does not match to the expected job title with attribute value: " + searchJobs.findCheckBox());
+        searchJobsPage.waitForCheckBox();
+        softAssert.assertNotNull(searchJobsPage.checkedBox(jobCategoryOption), "This selected job catigory does not have checked box");
 
-        searchJobs.waitForProductsList();
-        if (searchJobs.findExpectedJobsCount() < SearchJobs.currentPageNum) {
-            softAssert.assertEquals(searchJobs.findActualJobsCount(), searchJobs.findExpectedJobsCount(), "The actual number of products: " + searchJobs.findActualJobsCount() + " does not match expected number: " + searchJobs.findExpectedJobsCount());
+        softAssert.assertEquals(searchJobsPage.checkIfCheckBoxByJobCategory(jobCategoryOption), searchJobsPage.checkIfCheckBoxByValue(),"The checked checkbox does not matched to job category: " + jobCategoryOption);
+
+        if (searchJobsPage.findExpectedJobsCount(jobCategoryOption) < currentPageNum) {
+            softAssert.assertEquals(searchJobsPage.findActualJobsCount(), searchJobsPage.findExpectedJobsCount(jobCategoryOption), "The actual number of products: " + searchJobsPage.findActualJobsCount() + " does not match expected number: " + searchJobsPage.findExpectedJobsCount(jobCategoryOption));
         } else {
-            softAssert.assertEquals(searchJobs.findActualJobsCount(), SearchJobs.currentPageNum, "The actual number of products: " + searchJobs.findActualJobsCount() + " does not match expected total number that should be on the current page: " + SearchJobs.currentPageNum);
+            softAssert.assertEquals(searchJobsPage.findActualJobsCount(), currentPageNum, "The actual number of products: " + searchJobsPage.findActualJobsCount() + " does not match expected total number that should be on the current page: " + currentPageNum);
         }
         softAssert.assertAll();
     }
 
     @AfterClass
-    public void quiteTests() {
+    public void quitTest() {
 
         driver.quit();
     }
