@@ -7,8 +7,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class RandomJobDetailsPage {
-    private WebDriver driver;
+public class RandomJobDetailsPage extends BasePage {
     private WebDriverWait wait;
     private String languageOption = "РУС";
     private By jobTitleDetails = By.xpath("//div[@id='job-post']//h2");
@@ -17,7 +16,7 @@ public class RandomJobDetailsPage {
     private String url = "/en/";
 
     public RandomJobDetailsPage(WebDriver driver) {
-        this.driver = driver;
+       super(driver);
         wait = new WebDriverWait(driver, 20);
     }
 

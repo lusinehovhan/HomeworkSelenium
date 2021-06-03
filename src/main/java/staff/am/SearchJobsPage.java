@@ -11,8 +11,7 @@ import java.util.List;
 import java.util.Random;
 
 
-public class SearchJobsPage {
-    private WebDriver driver;
+public class SearchJobsPage extends BasePage {
     private WebDriverWait wait;
     private By productNumber = By.cssSelector("[data-key]");
     private By checkBoxCheck = By.xpath("//*[@id='jobsfilter-category']//input[@checked='checked']");
@@ -21,7 +20,7 @@ public class SearchJobsPage {
     private String jobCategorySpan = "//*[@id='jobsfilter-category']//*[text()='%s']/following::span";
 
     public SearchJobsPage(WebDriver driver) {
-        this.driver = driver;
+       super(driver);
         wait = new WebDriverWait(driver, 20);
     }
 
