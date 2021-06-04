@@ -9,17 +9,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class RandomJobDetailsPage extends BasePage {
     private WebDriverWait wait;
-    private String languageOption = "РУС";
     private By jobTitleDetails = By.xpath("//div[@id='job-post']//h2");
     private By language = By.id("lang-dropdown");
-    private String languageRussian = "//ul[@id='w4']//a[contains(text(),'%s')]";
-    private String url = "/en/";
+    private String languageType = "//ul[@id='w4']//a[contains(text(),'%s')]";
 
     public RandomJobDetailsPage(WebDriver driver) {
        super(driver);
         wait = new WebDriverWait(driver, 20);
     }
-
 
     public String checkJobTitleDetails() {
         WebElement jobTitleDetailsElement = driver.findElement(jobTitleDetails);
@@ -27,11 +24,11 @@ public class RandomJobDetailsPage extends BasePage {
 
     }
 
-    public String checkJobTitleAfterLanguageChangeRussian() {
+    public String checkJobTitleAfterLanguageChangeRussian(String languageOption) {
         Actions actions = new Actions(driver);
         WebElement languageElement = driver.findElement(language);
         actions.moveToElement(languageElement).perform();
-        By languageOptionLocator = By.xpath(String.format(languageRussian, languageOption));
+        By languageOptionLocator = By.xpath(String.format(languageType, languageOption));
         WebElement languageRussianElement = driver.findElement(languageOptionLocator);
         actions.moveToElement(languageRussianElement);
         actions.click().build().perform();

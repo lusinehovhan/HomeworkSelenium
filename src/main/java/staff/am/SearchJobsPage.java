@@ -18,18 +18,20 @@ public class SearchJobsPage extends BasePage {
     private String jobCategoryLocator = "//*[@id='jobsfilter-category']//*[text()='%s']";
     private String jobCategoryInput = "//*[@id='jobsfilter-category']//*[text()='%s']/preceding::input[1]";
     private String jobCategorySpan = "//*[@id='jobsfilter-category']//*[text()='%s']/following::span";
+    String urlTemplate1 = "/en/jobs/categories/index?JobsFilter%5Bkey_word%5D=&JobsFilter%5Bcategory%5D%5B0%5D=";
+    String urlTemplate2 = "%s#search_list_block";
 
     public SearchJobsPage(WebDriver driver) {
-       super(driver);
+        super(driver);
         wait = new WebDriverWait(driver, 20);
     }
 
     //Open method which does not give the direct access to the page = DRAFT
     public SearchJobsPage open(String jobCategoryName) {
         By value = By.xpath(String.format(jobCategoryLocator, jobCategoryName));
-        String valueElement = driver.findElement(value).getText();
-        String url = "/en/jobs/categories/index?JobsFilter%5Bkey_word%5D=&JobsFilter%5Bcategory%5D%5B0%5D='"+valueElement+"'#search_list_block";
-    //    driver.get(BASE_URL + url);
+        String valueElem = driver.findElement(value).getAttribute("value");
+        String url = String.format(urlTemplate2, valueElem);
+        driver.get(BASE_URL + urlTemplate1 + urlTemplate2);
         return this;
     }
 
@@ -75,7 +77,7 @@ public class SearchJobsPage extends BasePage {
         return jobRandomTitle;
     }
 
-    public WebElement getRandomElement(List<WebElement> list) {
+    private WebElement getRandomElement(List<WebElement> list) {
         Random rand = new Random();
         return list.get(rand.nextInt(list.size()));
     }

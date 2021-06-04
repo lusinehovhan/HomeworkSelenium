@@ -16,6 +16,7 @@ public class StaffamTest {
     private RandomJobDetailsPage randomJobDetailsPage;
     private String jobCategoryOption = "Software development";
     private int currentPageNum = 100;
+    private String languageOption = "РУС";
 
     @BeforeSuite
     public void chromeSetup() throws InterruptedException {
@@ -37,7 +38,7 @@ public class StaffamTest {
     public void testStaffAM() throws InterruptedException {
         SoftAssert softAssert = new SoftAssert();
 
-        searchJobsPage = new SearchJobsPage(driver);
+        searchJobsPage = new SearchJobsPage(driver).open(jobCategoryOption);
         searchJobsPage.waitPageLoad();
 
         softAssert.assertNotNull(searchJobsPage.checkedBox(jobCategoryOption), "This selected job catigory does not have checked box");
@@ -57,7 +58,7 @@ public class StaffamTest {
 
         softAssert.assertEquals(jobNameDetails, jobNameDetails, "The title of random chosen job: " + jobNameTitle + " does not match the job title on job Details page: " + jobNameDetails);
 
-        String jobNameDetailsAfterLanguageChangeRussian = randomJobDetailsPage.checkJobTitleAfterLanguageChangeRussian();
+        String jobNameDetailsAfterLanguageChangeRussian = randomJobDetailsPage.checkJobTitleAfterLanguageChangeRussian(languageOption);
         softAssert.assertEquals(jobNameDetails, jobNameDetailsAfterLanguageChangeRussian, "The Job Title has been changed after translation to Russian.");
 
         softAssert.assertAll();
