@@ -11,7 +11,6 @@ import static java.lang.String.format;
 
 
 public class HomePage extends BasePage {
-    private WebDriverWait wait;
     private By jobCategoryInput = By.xpath("//select[@id='jobsfilter-category']");
     private By search = By.xpath("//div[@id='home_page_search_section']//button");
     private String jobCategotyLocator = "//select[@id='jobsfilter-category']//*[text()='%s']";
@@ -19,7 +18,6 @@ public class HomePage extends BasePage {
 
     public HomePage(WebDriver driver) {
         super(driver);
-        wait = new WebDriverWait(driver, 20);
     }
 
     public HomePage open() {

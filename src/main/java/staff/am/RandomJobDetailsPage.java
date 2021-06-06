@@ -8,14 +8,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class RandomJobDetailsPage extends BasePage {
-    private WebDriverWait wait;
     private By jobTitleDetails = By.xpath("//div[@id='job-post']//h2");
     private By language = By.id("lang-dropdown");
     private String languageType = "//ul[@id='w4']//a[contains(text(),'%s')]";
 
     public RandomJobDetailsPage(WebDriver driver) {
        super(driver);
-        wait = new WebDriverWait(driver, 20);
     }
 
     public String checkJobTitleDetails() {
@@ -38,6 +36,6 @@ public class RandomJobDetailsPage extends BasePage {
 
     public void waitPageLoad() {
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(jobTitleDetails));
+      //  wait.until(ExpectedConditions.visibilityOfElementLocated(jobTitleDetails));
     }
 }

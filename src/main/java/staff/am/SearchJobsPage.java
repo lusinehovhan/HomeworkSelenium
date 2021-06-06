@@ -12,7 +12,6 @@ import java.util.Random;
 
 
 public class SearchJobsPage extends BasePage {
-    private WebDriverWait wait;
     private By productNumber = By.cssSelector("[data-key]");
     private By checkBoxCheck = By.xpath("//*[@id='jobsfilter-category']//input[@checked='checked']");
     private String jobCategoryLocator = "//*[@id='jobsfilter-category']//*[text()='%s']";
@@ -23,7 +22,6 @@ public class SearchJobsPage extends BasePage {
 
     public SearchJobsPage(WebDriver driver) {
         super(driver);
-        wait = new WebDriverWait(driver, 20);
     }
 
     //Open method which does not give the direct access to the page = DRAFT
@@ -84,6 +82,6 @@ public class SearchJobsPage extends BasePage {
 
     public void waitPageLoad() {
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(checkBoxCheck));
+       // wait.until(ExpectedConditions.visibilityOfElementLocated(checkBoxCheck));
     }
 }
